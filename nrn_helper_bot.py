@@ -11,9 +11,9 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 # Setting logging details to output messages to log file
-logging.basicConfig(format='Logged at %(asctime)s ### %(message)s ###: ', filename='nrn_helper_bot.log',
-                    encoding='utf-8', level=logging.DEBUG)
-logging.debug('Debug Mode')
+logging.basicConfig(format='Logged at %(asctime)s: #### %(message)s ####',
+                    filename='nrn_helper_bot.log', encoding='utf-8', level=logging.INFO)
+logging.debug('DEBUG MODE')
 
 # Setting up environmental variables
 # Using os.path to create relative link to .env instead of absolute - more portable
