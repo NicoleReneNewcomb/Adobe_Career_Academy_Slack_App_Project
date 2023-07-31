@@ -17,3 +17,12 @@ logging.info(' - Info - ')
 logging.warning(' - Warning - ')
 logging.error(' - Error - ')
 
+# Setting up environmental variables
+# Using os.path to create relative link to .env instead of absolute - more portable
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+SLACK_BOT_TOKEN = os.environ["NRN_Helper_Bot_Socket_Mode_Token"]
+SLACK_APP_TOKEN = os.environ["NRN_Helper_Bot_User_OAth_Token"]
+
+# Create instance of slack app using bot socket token
+nrn_helper_bot = App(token=SLACK_BOT_TOKEN)
+
