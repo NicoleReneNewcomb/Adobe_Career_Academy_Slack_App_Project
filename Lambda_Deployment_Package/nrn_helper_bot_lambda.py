@@ -35,7 +35,7 @@ def mention_handler(body, event, say, ack, logger):
     ack()
     logger.info(body)
     user = event['user']
-    bot_help_txt = "Please enter command /help to see available commands."
+    bot_help_txt = "\nPlease enter /help to see available commands."
     bot_message = f"Hello there, <@{user}>! How can I help you? {bot_help_txt}"
     say(text=bot_message)
 
@@ -79,13 +79,6 @@ def cute_animals(ack, say):
         {
             "blocks": [
                 {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Here's a cute animal photo for you:",
-                    },
-                },
-                {
                     "type": "image",
                     "title": {
                         "type": "plain_text",
@@ -93,7 +86,7 @@ def cute_animals(ack, say):
                     },
                     "image_url": random_cute_animal,
                     "alt_text": "Cute Animal",
-                },
+                }
             ]
         }
     )
