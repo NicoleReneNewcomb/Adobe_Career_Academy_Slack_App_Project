@@ -1,30 +1,28 @@
-""" Nicole-Rene's Helper Bot Slack App
+""" Nicole-Rene's Helper Bot Slack App for Lambda
     Created by: Nicole-Rene Newcomb
-    Newest Version Date: 07/30/2023
-    Description: This Slack App Bot acts as a helper and assistant.
+    Newest Version Date: 08/01/2023
+    Description: This Slack App Bot operates via AWS Lambda
 """
 
 import logging
-import os
 import random
-import requests
-from dotenv import load_dotenv
 from slack_bolt import App
-from slack_bolt.adapter.socket_mode import SocketModeHandler
+from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
-# Setting logging details to output messages to log file
-logging.basicConfig(format='Logged at %(asctime)s: #### %(message)s ####',
-                    filename='nrn_helper_bot.log', encoding='utf-8', level=logging.INFO)
-logging.debug('INFO MODE')
+# Setting logging details and formatting message output
+SlackRequestHandler.clear_all_log_handlers()
+logging.basicConfig(format="%(asctime)s %(message)s", level=logging.DEBUG)
 
-# Setting up environmental variables
-# Using os.path to create relative link to .env instead of absolute - more portable
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-SLACK_BOT_TOKEN = os.environ["NRN_Helper_Bot_User_OAth_Token"]
-SLACK_APP_TOKEN = os.environ["NRN_Helper_Bot_Socket_Mode_Token"]
+# Parameter provides rapid response to requests (avoids timeout when using FaaS)
+nrn_helper_bot = App(process_before_response=True)
 
-# Create instance of slack app using bot socket token
-nrn_helper_bot = App(token=SLACK_BOT_TOKEN)
+# Main handler for incoming requests to AWS Lambda function from Slack
+def lambda_handler(event, context):
+    """handles incoming requests from Slack to AWS Lambda function"""
+    # Create instance of bot
+    slack_handler = SlackRequestHandler(app=nrn_helper_bot)
+    # Route request to proper handler
+    return slack_handler.handle(event, context)
 
 # Create list of cute animal photos
 cute_animals_photos =\
@@ -83,60 +81,53 @@ cute_animals_photos =\
 'https://images.pexels.com/photos/133468/pexels-photo-133468.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/6131004/pexels-photo-6131004.jpeg?auto=compress&h=320']
 
-# Download and cache images to reduce latency
-def download_and_cache_images():
-    """downloads/caches images to reduce latency"""
-    cached_images = []
-    for url in cute_animals_photos:
-        try:
-            response = requests.get(url, timeout=10)
-            if response.status_code == 200:
-                # Save the image locally in a cache folder
-                image_filename = os.path.basename(url)
-                cache_path = f"cache/{image_filename}"
-                with open(cache_path, "wb") as new_file:
-                    new_file.write(response.content)
-                cached_images.append(cache_path)
-        except IOError as err:
-            print(f"Error downloading {url}: {err}")
-    return cached_images
 
-
-######### Event handlers section #########
+######### Event/command handlers section #########
 
 # Event handler for when Nicole-Rene's Helper Bot is mentioned by name
 @nrn_helper_bot.event("app_mention")
-def mention_handler(event, say):
-    """function to handle app_mention event"""
+def mention_handler(body, event, say, ack, logger):
+    """handles app_mention events when @<botname> referenced"""
+    ack()
+    logger.info(body)
     user = event['user']
-    bot_help_txt = "Please type \"bot help\" to see available commands."
+    bot_help_txt = "Please enter command /help to see available commands."
     bot_message = f"Hello there, <@{user}>! How can I help you? {bot_help_txt}"
     say(text=bot_message)
 
-# Event handler to listen for phrase "Bot Help" in messages
-@nrn_helper_bot.message("bot help")
-def bot_help(say):
-    """responding to "bot help" message"""
-    option1 = "cute animals, "
-    option2 = ":wave:"
+# Event handler to listen for the ":wave:" emoji message
+@nrn_helper_bot.message(":wave:")
+def wave(message, say, ack):
+    """handles a wave emoji message"""
+    ack()
+    user = message['user']
+    say(text=f"And a :wave: to you too, <@{user}>!")
+
+# Response to general message events
+@nrn_helper_bot.event("message")
+def message_response(ack, say):
+    """handles general message events from channel"""
+    ack()
+    say("Message Received.")
+
+# Command handler to respond to /help command
+@nrn_helper_bot.command("/help")
+def help_command(ack, say):
+    """handles /help command"""
+    ack()
+    option1 = "/cuteanimals, "
+    option2 = "/:wave:"
     bot_message = f"Here are some options: {option1}{option2}"
     say(text=bot_message)
 
-# Event handler to listen for the ":wave:" emoji in messages
-@nrn_helper_bot.message(":wave:")
-def wave(message, say):
-    """responding to a wave emoji message"""
-    user = message['user']
-    say(text=f"Hi there, <@{user}>!")
-
-# Event handler to listen for phrase "cute animals" in messages
-@nrn_helper_bot.message("cute animals")
+# Event handler to respond to /cuteanimals command
+@nrn_helper_bot.command("/cuteanimals")
 def cute_animals(ack, say):
     """responding to a wave emoji message"""
     ack()
     random_cute_animal = random.choice(cute_animals_photos)
-    # say("Here's a cute animal for you!")
 
+    # Sends both a text message and an image url back to Slack
     say(
         {
             "blocks": [
@@ -160,10 +151,4 @@ def cute_animals(ack, say):
         }
     )
 
-###### End of event handlers section ######
-
-# Designating the main function
-if __name__ == "__main__":
-    # Starting handlers
-    handler = SocketModeHandler(nrn_helper_bot, SLACK_APP_TOKEN)
-    handler.start()
+###### End of event/command handlers section ######

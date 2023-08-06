@@ -158,3 +158,35 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Prevent GitHub backing up slack_bolt, slack_sdk, pip, and python-lambda packages
+aws_lambda/
+bin/
+boto3/
+boto3-1.28.20.dist-info/
+botocore/
+botocore-1.31.20.dist-info/
+click/
+click-6.6.dist-info/
+dateutil/
+jmespath/
+jmespath-1.0.1.dist-info/
+pip/
+pip-23.2.1.dist-info/
+python/
+python_dateutil-2.8.2.dist-info/
+python_lambda-11.8.0.dist-info/
+pyYAML-5.1.dist-info/
+s3transfer/
+s3transfer-0.6.1.dist-info/
+six-1.16.0.dist-info/
+slack/
+slack_bolt/
+slack-bolt/
+slack_bolt-1.18.0.dist-info/
+slack_sdk/
+slack_sdk-3.21.3.dist-info
+tests/
+urllib3/
+urllib3-1.26.16.dist-info/
+yaml/

@@ -4,13 +4,19 @@
     Description: This Slack App Bot acts as a helper and assistant.
 """
 
+
 import logging
+import sys
 import os
 import random
-import requests
-from dotenv import load_dotenv
+import json
 from slack_bolt import App
-from slack_bolt.adapter.socket_mode import SocketModeHandler
+from slack_bolt.adapter.aws_lambda import SlackRequestHandler
+
+# path to access python folder within lambda function folder structure
+python_folder = os.path.join(os.path.dirname(__file__), 'python')
+sys.path.append(python_folder)
+import requests
 
 # Setting logging details to output messages to log file
 logging.basicConfig(format='Logged at %(asctime)s: #### %(message)s ####',
@@ -18,13 +24,11 @@ logging.basicConfig(format='Logged at %(asctime)s: #### %(message)s ####',
 logging.debug('INFO MODE')
 
 # Setting up environmental variables
-# Using os.path to create relative link to .env instead of absolute - more portable
-load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 SLACK_BOT_TOKEN = os.environ["NRN_Helper_Bot_User_OAth_Token"]
-SLACK_APP_TOKEN = os.environ["NRN_Helper_Bot_Socket_Mode_Token"]
+SLACK_SIGNING_SECRET = os.environ["NRN_Helper_Bot_Signing_Secret"]
 
 # Create instance of slack app using bot socket token
-nrn_helper_bot = App(token=SLACK_BOT_TOKEN)
+nrn_helper_bot = App(signing_secret=SLACK_SIGNING_SECRET, token=SLACK_BOT_TOKEN)
 
 # Create list of cute animal photos
 cute_animals_photos =\
@@ -82,6 +86,18 @@ cute_animals_photos =\
 'https://images.pexels.com/photos/2301173/pexels-photo-2301173.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/133468/pexels-photo-133468.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/6131004/pexels-photo-6131004.jpeg?auto=compress&h=320']
+
+#Function to handle Slack to AWS Lambda requests
+def lambda_handler(event, context):
+    """handles Slack events sent to lambda"""
+    body = event["body"]
+    payload = json.loads(body.get("payload", "{}"))
+    response = nrn_helper_bot.dispatch(payload)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(response)
+    }
 
 # Download and cache images to reduce latency
 def download_and_cache_images():
@@ -161,9 +177,3 @@ def cute_animals(ack, say):
     )
 
 ###### End of event handlers section ######
-
-# Designating the main function
-if __name__ == "__main__":
-    # Starting handlers
-    handler = SocketModeHandler(nrn_helper_bot, SLACK_APP_TOKEN)
-    handler.start()
