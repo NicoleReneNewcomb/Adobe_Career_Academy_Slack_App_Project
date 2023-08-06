@@ -6,6 +6,7 @@
 
 import logging
 import random
+from cute_animal_photos import cute_animals_photos
 from slack_bolt import App
 from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
@@ -23,63 +24,6 @@ def lambda_handler(event, context):
     slack_handler = SlackRequestHandler(app=nrn_helper_bot)
     # Route request to proper handler
     return slack_handler.handle(event, context)
-
-# Create list of cute animal photos
-cute_animals_photos =\
-['https://images.pexels.com/photos/39317/chihuahua-dog-puppy-cute-39317.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/157465/pexels-photo-157465.jpeg?auto=compress&w=320&h=320', 
-'https://images.pexels.com/photos/314865/pexels-photo-314865.jpeg?auto=compress&w=320&h=320',
-'https://images.pexels.com/photos/2538270/pexels-photo-2538270.jpeg?auto=compress&w=320&h=320',
-'https://images.pexels.com/photos/5033770/pexels-photo-5033770.jpegauto=compress&w=320&h=320',
-'https://images.pexels.com/photos/45170/kittens-cat-cat-puppy-rush-45170.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/2835623/pexels-photo-2835623.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/17189473/pexels-photo-17189473.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/16716103/pexels-photo-16716103.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/10386196/pexels-photo-10386196.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/5187249/pexels-photo-5187249.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/7938587/pexels-photo-7938587.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/15773227/pexels-photo-15773227.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/6959442/pexels-photo-6959442.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/6897445/pexels-photo-6897445.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/4147986/pexels-photo-4147986.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/14000649/pexels-photo-14000649.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/10459118/pexels-photo-10459118.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/4190869/pexels-photo-4190869.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/7324407/pexels-photo-7324407.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/9809416/pexels-photo-9809416.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/3610168/pexels-photo-3610168.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/730537/pexels-photo-730537.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/9759731/pexels-photo-9759731.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/5910875/pexels-photo-5910875.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/7293362/pexels-photo-7293362.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/17744112/pexels-photo-17744112.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/15557809/pexels-photo-15557809.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/792416/pexels-photo-792416.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/674318/pexels-photo-674318.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/460775/pexels-photo-460775.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/106685/pexels-photo-106685.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/50577/hedgehog-animal-baby-cute-50577.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/1643456/pexels-photo-1643456.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/2189599/pexels-photo-2189599.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/905248/pexels-photo-905248.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/1692984/pexels-photo-1692984.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/1123771/pexels-photo-1123771.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/3839696/pexels-photo-3839696.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/819372/pexels-photo-819372.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/3661927/pexels-photo-3661927.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/326929/pexels-photo-326929.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/332153/pexels-photo-332153.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/1322599/pexels-photo-1322599.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/15624135/pexels-photo-15624135.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/260143/pexels-photo-260143.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/271932/pexels-photo-271932.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/7101144/pexels-photo-7101144.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/5263832/pexels-photo-5263832.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/356547/pexels-photo-356547.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/1458911/pexels-photo-1458911.jpeg?auto=compress&h=320',
-'https://images.pexels.com/photos/2301173/pexels-photo-2301173.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/133468/pexels-photo-133468.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/6131004/pexels-photo-6131004.jpeg?auto=compress&h=320']
 
 
 ######### Event/command handlers section #########
@@ -107,6 +51,7 @@ def wave(message, say, ack):
 @nrn_helper_bot.event("message")
 def message_response(ack, say):
     """handles general message events from channel"""
+    #Acknowledges receipt of event, but no content sent to channel
     ack()
     say("Message Received.")
 
