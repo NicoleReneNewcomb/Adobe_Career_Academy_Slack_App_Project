@@ -115,9 +115,11 @@ def message_response(ack, say):
 def help_command(ack, say):
     """handles /help command"""
     ack()
-    option1 = "/cuteanimals, "
-    option2 = "/:wave:"
-    bot_message = f"Here are some options: {option1}{option2}"
+    option1 = "\n/cuteanimals - displays a random photo of cute animals"
+    option2 = "\n/inspiration - displays a random inspirational quote"
+    option3 = "\n mention :wave: in message - bot waves back to you"
+
+    bot_message = f"Here are some options: {option1}{option2}{option3}"
     say(text=bot_message)
 
 # Event handler to respond to /cuteanimals command
