@@ -8,6 +8,8 @@ import logging
 import os
 import random
 import requests
+import re
+import openai
 from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
@@ -74,7 +76,6 @@ cute_animals_photos =\
 'https://images.pexels.com/photos/1322599/pexels-photo-1322599.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/15624135/pexels-photo-15624135.jpeg?auto=compress&h=320',
 'https://images.pexels.com/photos/260143/pexels-photo-260143.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/271932/pexels-photo-271932.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/7101144/pexels-photo-7101144.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/5263832/pexels-photo-5263832.jpeg?auto=compress&h=320',
 'https://images.pexels.com/photos/356547/pexels-photo-356547.jpeg?auto=compress&w=320',
@@ -102,41 +103,104 @@ def download_and_cache_images():
     return cached_images
 
 
-######### Event handlers section #########
+######### Event/command handlers section #########
 
 # Event handler for when Nicole-Rene's Helper Bot is mentioned by name
 @nrn_helper_bot.event("app_mention")
-def mention_handler(event, say):
-    """function to handle app_mention event"""
+def mention_handler(body, event, say, ack, logger):
+    """handles app_mention events when @<botname> referenced"""
+    ack()
+    logger.info(body)
     user = event['user']
-    bot_help_txt = "Please type \"bot help\" to see available commands."
+    bot_help_txt = "\nPlease enter /help to see available commands."
     bot_message = f"Hello there, <@{user}>! How can I help you? {bot_help_txt}"
-    say(text=bot_message)
-
-# Event handler to listen for phrase "Bot Help" in messages
-@nrn_helper_bot.message("bot help")
-def bot_help(say):
-    """responding to "bot help" message"""
-    option1 = "cute animals, "
-    option2 = ":wave:"
-    bot_message = f"Here are some options: {option1}{option2}"
     say(text=bot_message)
 
 # Event handler to listen for the ":wave:" emoji in messages
 @nrn_helper_bot.message(":wave:")
-def wave(message, say):
-    """responding to a wave emoji message"""
+def wave(message, say, ack):
+    """handles a wave emoji message"""
+    ack()
     user = message['user']
-    say(text=f"Hi there, <@{user}>!")
+    say(text=f"And a :wave: to you too, <@{user}>!")
 
-# Event handler to listen for phrase "cute animals" in messages
-@nrn_helper_bot.message("cute animals")
+# Event handler to listen for messages with negative emotions that need inspiration/encouragement
+@nrn_helper_bot.message(re.compile("(annoyed|angry|depressed|frustrated|sad|unhappy|upset)"))
+def triggerred_inspiration_dose(message, say, ack):
+    """handles response to overhearing negative messages"""
+    ack()
+    user = message['user']
+    user_message = message['text']
+    openai.api_key = os.getenv('Slack_Bot_OpenAI_Integration_Key')
+    prompt_message = f"Please create a inspirational quote to motivate someone who just said the following: {user_message}"
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
+        messages = [
+            {"role": "user", "content": prompt_message}
+        ]
+    )
+    text_reply = response["choices"][0]["message"]["content"]
+    say(text=f"Take heart, <@{user}>! Here's an inspirational quote from ChatGPT:\n\n{text_reply}")
+
+# Response to general message events
+@nrn_helper_bot.event("message")
+def message_response(ack, say):
+    """handles general message events from channel"""
+    #Acknowledges receipt of event, but no content sent to channel
+    ack()
+    say("Message Received.")
+
+# Command handler to respond to /help command
+@nrn_helper_bot.command("/help")
+def help_command(ack, say):
+    """handles /help command"""
+    ack()
+    option1 = "\n/help - displays the available commands\n/cuteanimals - displays a random photo of cute animals"
+    option2 = "\n/inspiration - displays a random famous inspirational quote\n/chatgpt - requests a response from ChatGPT"
+    option3 = "\nMention :wave: in message - bot waves back to you\nMention feeling a negative emotion - ChatGPT responds with an encouraging message"
+
+    bot_message = f"Here are some options: {option1}{option2}{option3}"
+    say(text=bot_message)
+
+# Event handler to listen for /chatgpt command
+@nrn_helper_bot.command("/chatgpt")
+def chatgpt_request(body, say, ack):
+    """handles /chatgpt command"""
+    ack()
+    openai.api_key = os.getenv('Slack_Bot_OpenAI_Integration_Key')
+    prompt_message = body['text']
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
+        messages = [
+            {"role": "user", "content": prompt_message}
+        ]
+    )
+    text_reply = response["choices"][0]["message"]["content"]
+    say(text=f"Heres the response from ChatGPT:\n\n{text_reply}")
+
+# Event handler to listen for /inspiration command
+@nrn_helper_bot.command("/inspiration")
+def chatgpt_request(message, say, ack):
+    """handles /inspiration command"""
+    ack()
+    openai.api_key = os.getenv('Slack_Bot_OpenAI_Integration_Key')
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
+        messages = [
+            {"role": "user", "content": "Using a random number generator to ensure a low likelihood of repitition, please provide a famous inspirational or motivational quote along with the name of the speaker or author."}
+        ]
+    )
+    text_reply = response["choices"][0]["message"]["content"]
+    say(text=f"Heres your inspirational message from ChatGPT:\n\n{text_reply}")
+
+# Event handler to respond to /cuteanimals command
+@nrn_helper_bot.command("/cuteanimals")
 def cute_animals(ack, say):
     """responding to a wave emoji message"""
     ack()
     random_cute_animal = random.choice(cute_animals_photos)
-    # say("Here's a cute animal for you!")
 
+    # Sends both a text message and an image url back to Slack
     say(
         {
             "blocks": [
@@ -155,12 +219,12 @@ def cute_animals(ack, say):
                     },
                     "image_url": random_cute_animal,
                     "alt_text": "Cute Animal",
-                },
+                }
             ]
         }
     )
 
-###### End of event handlers section ######
+###### End of event/command handlers section ######
 
 # Designating the main function
 if __name__ == "__main__":
