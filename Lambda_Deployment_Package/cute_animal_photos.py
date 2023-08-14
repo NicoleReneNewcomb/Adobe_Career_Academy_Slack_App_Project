@@ -52,7 +52,6 @@ cute_animals_photos =\
 'https://images.pexels.com/photos/1322599/pexels-photo-1322599.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/15624135/pexels-photo-15624135.jpeg?auto=compress&h=320',
 'https://images.pexels.com/photos/260143/pexels-photo-260143.jpeg?auto=compress&w=320',
-'https://images.pexels.com/photos/271932/pexels-photo-271932.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/7101144/pexels-photo-7101144.jpeg?auto=compress&w=320',
 'https://images.pexels.com/photos/5263832/pexels-photo-5263832.jpeg?auto=compress&h=320',
 'https://images.pexels.com/photos/356547/pexels-photo-356547.jpeg?auto=compress&w=320',
