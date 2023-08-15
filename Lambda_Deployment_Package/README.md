@@ -13,5 +13,6 @@ The available functions are as follows:
 /cuteanimals - displays a random photo of cute animals  
 /inspiration - displays a random famous inspirational quote  
 /chatgpt - requests a response from ChatGPT  
+Mention @Nicole-Rene's Helper Bot - bot greets user  
 Mention :wave: in message - bot waves back to you  
 Mention feeling a negative emotion - ChatGPT responds with an encouraging message  
