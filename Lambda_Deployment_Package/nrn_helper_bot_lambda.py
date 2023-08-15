@@ -98,10 +98,11 @@ def message_response(ack):
 def help_command(say):
     """handles /help command"""
     option1 = "\n/help - displays the available commands\n/cuteanimals - displays a random photo of cute animals"
-    option2 = "\n/inspiration - displays a random famous inspirational quote\n/chatgpt - requests a response from ChatGPT"
-    option3 = "\nMention :wave: in message - bot waves back to you\nMention feeling a negative emotion - ChatGPT responds with an encouraging message"
+    option2 = "\n/inspiration - displays a random famous inspirational quote\n/chatgpt + message/prompt - requests a response from ChatGPT"
+    option3 = "\nMention @Nicole-Rene's Helper Bot - bot greets user and suggests /help command"
+    option4 = "\nMention :wave: in message - bot waves back to you\nMention feeling a negative emotion - ChatGPT responds with an encouraging message"
 
-    bot_message = f"\n \n \nHere are some options: {option1}{option2}{option3}"
+    bot_message = f"\n \n \nHere are some options: {option1}{option2}{option3}{option4}"
     say(text=bot_message)
 
 # Command handler to respond to /help command

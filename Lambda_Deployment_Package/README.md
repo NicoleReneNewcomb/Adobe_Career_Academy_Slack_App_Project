@@ -12,7 +12,7 @@ The available functions are as follows:
 /help - displays the available commands  
 /cuteanimals - displays a random photo of cute animals  
 /inspiration - displays a random famous inspirational quote  
-/chatgpt - requests a response from ChatGPT  
-Mention @Nicole-Rene's Helper Bot - bot greets user  
+/chatgpt + message/prompt - requests a response from ChatGPT  
+Mention @Nicole-Rene's Helper Bot - bot greets user and suggests /help command  
 Mention :wave: in message - bot waves back to you  
 Mention feeling a negative emotion - ChatGPT responds with an encouraging message  
