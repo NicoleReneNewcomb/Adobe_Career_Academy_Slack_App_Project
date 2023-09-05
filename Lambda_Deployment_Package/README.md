@@ -6,7 +6,7 @@ in AWS Lambda settings.
 
 More details are available through my [Adobe Express Page - Slack App Bot Project](https://new.express.adobe.com/webpage/NMa7ztqruDUYf)
 
-![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/031f8ac9-0f6c-4952-aaa1-bf3d23216783)
+![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/031f8ac9-0f6c-4952-aaa1-bf3d23216783 | width=100)
 
 My Slack Bot is named Nicole-Rene's Helper Bot. It uses AWS Lambda to operate on the cloud within the FaaS model. In addition to providing emotional support and options to help provide a burst of cheer to users, my bot also integrates with ChatGPT for powerful AI-generated content. The functions include multiple /slash commands in addition to listening for certain keywords in messages that indicate a user is going through a hard time and feeling a negative emotion.
 
@@ -20,6 +20,10 @@ The available functions are as follows:
 Mention @Nicole-Rene's Helper Bot - bot greets user and suggests /help command  
 Mention :wave: in message - bot waves back to you  
 Mention feeling a negative emotion - ChatGPT responds with an encouraging message  
+
+###Screenshots of App In-Action:
+
+![Screenshot 2023-08-13 230628](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/18d37ac5-4bb9-4b12-8768-c4bc24343456)
 
 ![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/e0a5dc57-a0b2-48ad-9ed4-6941bd276f1c)
 
