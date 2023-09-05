@@ -24,22 +24,16 @@ Mention feeling a negative emotion - ChatGPT responds with an encouraging messag
 
 ### Screenshots of App In-Action:
 
-<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/18d37ac5-4bb9-4b12-8768-c4bc24343456" alt="A screenshot of my Slack Bot's response of a Slack message including an image of a baby chick peeking out from his mother's wing." width=50%>
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/18d37ac5-4bb9-4b12-8768-c4bc24343456" alt="A screenshot of my Slack Bot's response of a Slack message including an image of a baby chick peeking out from his mother's wing." width=40%>
 
-<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/e0a5dc57-a0b2-48ad-9ed4-6941bd276f1c" alt="A Screenshot of the menu within Slack displaying the available slash commands for my bot." width=50%>
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/e0a5dc57-a0b2-48ad-9ed4-6941bd276f1c" alt="A Screenshot of the menu within Slack displaying the available slash commands for my bot." width=70%>
 
-<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/c6b5c295-daad-42b7-ba94-b8622a0a1a1f" alt="A screenshot of the app mention response with greeting from my bot." width=80%>
-
-<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/e0a5dc57-a0b2-48ad-9ed4-6941bd276f1c" alt="My Slack Bot responds to a message including negative emotion keywords in Slack." width=80%>
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/c6b5c295-daad-42b7-ba94-b8622a0a1a1f" alt="A screenshot of the app mention response with greeting from my bot." width=70%>
 
 <img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/df857629-fa5c-4cc5-98f6-2ba68f399f58" alt="My Slack Bot responds to a message including negative emotion keywords in Slack." width=80%>
 
-![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/8f083475-d6bc-4124-abd7-a71bee5141db)
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/8f083475-d6bc-4124-abd7-a71bee5141db" alt="My Slack Bot responds to a message including negative emotion keywords in Slack." width=80%>
 
-![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/a1d1f1bf-7dcb-4a25-b645-db8331f00fd0)
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/a1d1f1bf-7dcb-4a25-b645-db8331f00fd0" alt="My Slack Bot responds with 10 potential marketing titles based on slash ChatGPT Slack command." width=80%>
 
-![image](https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/af92b1f8-3c30-46fd-bec2-1119cfeefa70)
-
-
-
-
+<img src ="https://github.com/NicoleReneNewcomb/Adobe_Career_Academy_Slack_App_Project/assets/112290345/af92b1f8-3c30-46fd-bec2-1119cfeefa70" alt="My Slack Bot responds with the information about potential target audience for a new product using the slash ChatGPT Slack command." width=80%>
